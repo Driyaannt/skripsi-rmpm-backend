@@ -1,7 +1,3 @@
-# Template API
-
-This Project Framework created by NRK (nkusworo@aio.co.id) is ready to use as base API service for another project.
-
 ## Installation
 
 1. Extract zip

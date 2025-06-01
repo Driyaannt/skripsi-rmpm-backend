@@ -1,0 +1,70 @@
+const Sequelize = require('sequelize');
+module.exports = function(sequelize, DataTypes) {
+  const alternatif = sequelize.define('alternatif', {
+    id_alternatif: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true
+    },
+    id_varian: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'alternatif',
+        key: 'id_alternatif'
+      }
+    },
+    nama_alternatif: {
+      type: DataTypes.STRING(50),
+      allowNull: false
+    },
+    deskripsi: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    harga: {
+      type: DataTypes.FLOAT,
+      allowNull: true
+    },
+    kapasitas: {
+      type: DataTypes.FLOAT,
+      allowNull: true
+    },
+    location: {
+      type: DataTypes.STRING(100),
+      allowNull: true
+    },
+  }, {
+    sequelize,
+    tableName: 'alternatif',
+    timestamps: false,
+    indexes: [
+      {
+        name: "PRIMARY",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "id_alternatif" },
+        ]
+      },
+      {
+        name: "id_varian",
+        using: "BTREE",
+        fields: [
+          { name: "id_varian" },
+        ]
+      },
+    ]
+  });
+
+  alternatif.associate = function(models) {
+    alternatif.belongsTo(models.mstVarian, {
+      foreignKey: 'id_varian',
+      targetKey: 'id',
+      as: 'varian'
+    });
+  };
+
+  return alternatif;
+};
